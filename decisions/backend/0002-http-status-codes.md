@@ -8,12 +8,36 @@ Accepted
 
 ## Context
 
-The issue motivating this decision, and any context that influences or constrains the decision.
+HTTP status codes are using on the project
 
 ## Decision
 
-The change that we're proposing or have agreed to implement.
+### Success
+**201** - created, uses as POST operation result, means the resource is successfully created.
+**200** - uses for indicating success in all other cases.
+
+### Errors
+
+#### Application generated
+**400** - bad request. Means the request couldn't be parsed by service (invalid JSON, unknown query params).
+**422** - validation error. The request is well-formed but has some logic errors (empty name, an invalid date, etc).
+**409** - uses for the general logic error.
+
+For **409 & 422** error codes service return JSON with more detail error description:
+```
+{
+    "message": "validation error, BirthDate"
+}
+```
+
+#### General
+
+Other HTTP codes van be returned in other different situations
+For example:
+404 - url not found 
+or
+500 - unexpected server error or server is down 
 
 ## Consequences
 
-What becomes easier or more difficult to do and any risks introduced by the change that will need to be mitigated.
+Service should not use any other error codes but described above.
