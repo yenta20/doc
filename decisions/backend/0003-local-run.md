@@ -8,12 +8,27 @@ Accepted
 
 ## Context
 
-The issue motivating this decision, and any context that influences or constrains the decision.
+How to run application locally for debug
 
 ## Decision
 
-The change that we're proposing or have agreed to implement.
+### Import service key
+
+- Open *yenta-non-prod* GCP project
+- Open *IAM & Admin/Service Accounts*
+- Create new service key for the *local-run* service account (Action/Create key)
+- Download key and rename it into *service-key.json*
+- Create folder *secrets* on the same level with *services* folder (on the organization root level)
+
+### Run application
+
+- go to the services folder
+- run *make dupb* (or *make dup* if containers are already built)
 
 ## Consequences
 
-What becomes easier or more difficult to do and any risks introduced by the change that will need to be mitigated.
+The current version writes images directly into the non-prod storage, so clear it after testing.
+
+## TODO
+
+Add terraform configuration and prepare & clean up steps for the local run.
