@@ -20,7 +20,6 @@ Recon API structure proposal
 * **PUT /profile/push_token** - set push token
 * **PUT /profile/logout** - logout (clear push token)
 
-
 ### Reviews
 
 * **POST /review** - create a review
@@ -31,6 +30,7 @@ Recon API structure proposal
 
 * **PUT /review/:id/complete** - complete a review
 
+* **GET /review/:id** - get review by id
 
 ### Places
 
@@ -72,6 +72,7 @@ If with_reviews == 1, returns places with visible reviews and "user applicable" 
 Returns new reviews, follow requests, new ratings for my places, etc but only 100 (?) latest. 
 
 
-## Consequences
+## Questions
 
-What becomes easier or more difficult to do and any risks introduced by the change that will need to be mitigated.
+* My reviews - correct place?
+* Design for the review edit
