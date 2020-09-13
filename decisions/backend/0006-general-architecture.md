@@ -1,4 +1,4 @@
-# 6. general architecture
+# 6. General architecture
 
 Date: 2020-09-13
 
@@ -30,8 +30,7 @@ Recon backend architecture approach
 
 ### Architecture diagram
 
-![](img/recon_cloud_architecture.png =500x389)
-
+<img src="img/recon_cloud_architecture.png" alt="drawing" width="500" height="389"/>
 
 ## Consequences
 
