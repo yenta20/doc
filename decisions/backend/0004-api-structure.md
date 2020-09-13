@@ -4,7 +4,7 @@ Date: 2020-08-28
 
 ## Status
 
-Accepted
+In progress
 
 ## Context
 
@@ -15,33 +15,37 @@ Recon API structure proposal
 ### Profile
 
 * **GET /profile** - get current user profile
+
 * **PUT /profile** - update profile
 * **PUT /profile/avatar** - upload avatar
 * **PUT /profile/push_token** - set push token
 * **PUT /profile/logout** - logout (clear push token)
 
+* **GET /profile/my_reviews** - get all reviews created by user
+
 ### Reviews
 
-* **POST /review** - create a review
+* **POST /reviews** - create a review
 
-* **POST /review/:id/images/:number** - upload an image
+**change to /reviews/:id/images... ?**
+
+* **POST /reviews/review/:id/images/:number** - upload an image
 - :id - review ID
 - :number - image position
 
-* **PUT /review/:id/complete** - complete a review
+* **PUT /reviews/review/:id/complete** - complete a review
 
-* **GET /review/:id** - get review by id
+* **GET /reviews/review/:id** - get review by id
 
 ### Places
 
-* **POST place/search/points?type=(all|registered)** - search places for the points set. 
-Returns only registered places (type==registered) or both registered + places found via Google Places API (type==all)
+* **POST places/search/points?type=(all|registered)** - search places for the points set. 
+Returns only registered places (type==registered) or both registered + places found via Google Places API (type==all). 
+Now supported only *all* mode.
 
-* **POST place/search/area?with_reviews=(0|1)** - search in the rectange area. Returns only registered places.
-If with_reviews == 0, returns only places.
-If with_reviews == 1, returns places with visible reviews and "user applicable" ratings
+* **GET places/search/area?top_left_lat=..&top_left_long=..&bottom_right_lat=..&bottom_right_long=..** - search in the rectange area. Returns only registered places.
 
-* **GET place/:id** - get the registered place info (inclides visible reviews and "user applicable" rating)
+* **GET place/:id** - get the registered place info.
 
 
 ### Followers
@@ -63,16 +67,15 @@ If with_reviews == 1, returns places with visible reviews and "user applicable" 
 
 ### Feed
 
-* **GET /feed?offset=0&limit=10** - get user feed (visible reviews sorted by created date)
-
+In design
 
 ### Notifications
 
-* **GET /notifications?since=time_token** - returns all updates related to the user happened since `time_token`.
-Returns new reviews, follow requests, new ratings for my places, etc but only 100 (?) latest. 
-
+In design
 
 ## Questions
 
-* My reviews - correct place?
+* Feed API
 * Design for the review edit
+* Get/Search place should return reviews or not?
+
