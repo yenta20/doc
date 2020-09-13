@@ -30,7 +30,7 @@ Recon backend architecture approach
 
 ### Architecture diagram
 
-![](img/recon_cloud_architecture.png)
+![](img/recon_cloud_architecture.png =500x389)
 
 
 ## Consequences
