@@ -49,6 +49,16 @@ kubectl scale  --replicas=0 deployment/api-deployment
 kubectl scale  --replicas=1 deployment/api-deployment
 ```
 
+#### Secrets
+
+Install secrets:
+```
+kubectl create secret generic account-credentials --from-file=service-key.json=service-key.json
+kubectl create secret generic db-credentials --from-literal=connection=<DB_CONNECTION_STRING>
+kubectl create secret generic api-key --from-literal=key=<API_KEY>
+kubectl create secret generic geo-api-key --from-literal=geo-key=<GEO_API_KEY>
+```
+
 ### Database
 
 1. Create PostgreSQL instance on GCP
