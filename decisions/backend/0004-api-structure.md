@@ -62,7 +62,24 @@ Recon API structure proposal
 * **PUT /follow/followed/request/pending/:id/cancel** - cancel my pending follow request
 
 ### Geocoding
+
 * **POST /geo/rev/batch** - search places for the points set and clusters them . Returns the merged result of places from google ,here and repo
+-example of body:    "points":[{
+                         "id":"1",
+                         "point":{
+                             "latitude":50.424949,
+                             "longitude":23.67908
+                         }
+                     },
+                     {
+                         "id":"2",
+                         "point":{
+                             "latitude":39.9860,
+                             "longitude":-120.3304
+                         }
+                     }],
+                     "radius": 85
+                 }
 
 * **GET /geo/rev?lat=..&long=..&radius=..** - search places for point and radius. Returns the merged result of places from google ,here and repo
 
