@@ -43,7 +43,7 @@ Recon API structure proposal
 
 * **GET /place/:id** - get the registered place info.
 
-* **GET /place/:id/reviews** - get all ready reviews for place.
+* **GET /place/:id/reviews?offset=..&limit=..** - get all ready reviews for place.
 
 ### Followers
 
