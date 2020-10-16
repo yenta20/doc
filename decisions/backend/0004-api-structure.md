@@ -41,9 +41,9 @@ Recon API structure proposal
 
 * **GET /places/search/area?top_left_lat=..&top_left_long=..&bottom_right_lat=..&bottom_right_long=..** - search in the rectange area. Returns only registered places.
 
-* **GET /place/:id** - get the registered place info.
+* **GET /places/:id** - get the registered place info.
 
-* **GET /place/:id/reviews?offset=..&limit=..** - get all ready reviews for place.
+* **GET /places/:id/reviews?offset=..&limit=..** - get all ready reviews for place.
 
 ### Followers
 
