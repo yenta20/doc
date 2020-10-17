@@ -47,18 +47,18 @@ Recon API structure proposal
 
 ### Followers
 
-* **GET /follow/followers** - get my followers
-* **GET /follow/followed** - get users I follow
+* **GET /follow/info** - get 4 lists:
+    * **followers** - my followers
+    * **followed** - users I follow
+    * **followers_requests** - pending follow requests from users wants to follow me
+    * **followed_requests** - my pending follow requests
 
 * **PUT /follow/:user_id** - send follow request
 * **PUT /follow/:user_id/unfollow** - unfollow user
 
-* **GET /follow/followers/request/pending** - get pending follow requests from users wants to follow me
-
 * **PUT /follow/followers/request/pending/:id/approve** - approve the pending request
 * **PUT /follow/followers/request/pending/:id/reject** - reject the pending request
 
-* **GET /follow/followed/request/pending** - get my pending follow requests
 * **PUT /follow/followed/request/pending/:id/cancel** - cancel my pending follow request
 
 ### Geocoding
