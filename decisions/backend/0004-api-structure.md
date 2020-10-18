@@ -15,6 +15,17 @@ Recon API structure proposal
 ### Profile
 
 * **GET /profile** - get current user profile
+```
+Response:
+{
+    "id": 1,
+    "name": "John Doe",
+    "age": 23,
+    "email": "john.doe@hell.com",
+    "avatar": "https://storage.googleapis.com/avatar-store-local-eugenf/30db7f00-7776-4259-a4f8-8aeb01622df6",
+    "user_settings": {}
+}
+```
 
 * **PUT /profile** - update profile
 * **PUT /profile/avatar** - upload avatar
@@ -26,8 +37,17 @@ Recon API structure proposal
 ### Reviews
 
 * **POST /reviews** - create a review
-
-**change to /reviews/:id/images... ?**
+```
+Request:
+{
+    "place": {
+        "external_id": "ChIJy3tqPUwVkFQRuEM8cw5X8aY",
+        "place_type": 1
+    },
+    "text": "Perfect place for lunch",
+    "stars": 5
+}
+```
 
 * **POST /reviews/:id/images/:number** - upload an image
 - :id - review ID
@@ -36,6 +56,51 @@ Recon API structure proposal
 * **PUT /reviews/:id/complete** - complete a review
 
 * **GET /reviews/:id** - get review by id
+```
+Response:
+{
+    "review": {
+        "id": 1,
+        "creator": 1,
+        "created": "2020-10-18T14:24:10Z",
+        "place": {
+            "id": 1,
+            "external_id": "ChIJy3tqPUwVkFQRuEM8cw5X8aY",
+            "place_type": 1,
+            "title": "Korean Bamboo",
+            "tags": [
+                "restaurant",
+                "food",
+                "point_of_interest",
+                "establishment"
+            ],
+            "location": {
+                "latitude": 47.6147389,
+                "longitude": -122.3445459
+            },
+            "address": {
+                "country": "United States",
+                "region": "WA",
+                "city": "King County",
+                "postal": "98121",
+                "address_line": "2236 3rd Ave"
+            },
+            "vicinity": "",
+            "phone_number": "+1 206-443-9898",
+            "rating": 0,
+            "website": ""
+        },
+        "text": "Perfect place for lunch",
+        "stars": 5,
+        "images": [
+            {
+                "id": 1,
+                "url": "https://storage.googleapis.com/image-store-local-eugenf/0835074b-fa1c-4cc8-b6ec-54a828b3ea9a"
+            }
+        ]
+    }
+}
+```
 
 ### Places
 
@@ -44,44 +109,158 @@ Recon API structure proposal
 * **GET /places/:id** - get the registered place info.
 
 * **GET /places/:id/reviews?offset=..&limit=..** - get all ready reviews for place.
+```
+Response:
+{
+    "reviews": [
+        {
+            "id": 1,
+            "creator": 1,
+            "created": "2020-10-18T14:24:10Z",
+            "place": {
+                "id": 1,
+                .......
+            },
+            "text": "Perfect place for lunch",
+            "stars": 5,
+            "images": [
+                {
+                    "id": 1,
+                    "url": "https://storage.googleapis.com/image-store-local-eugenf/0835074b-fa1c-4cc8-b6ec-54a828b3ea9a"
+                }
+            ]
+        }
+    ],
+    "users": [
+        {
+            "id": 1,
+            "name": "John Doe",
+            "avatar": "https://storage.googleapis.com/image-store-local-eugenf/30db7f00-7776-4259-a4f8-8aeb01622df6",
+        }
+    ],
+    "from": 0,
+    "limit": 5
+}
+```
 
 ### Followers
 
-* **GET /follow/info** - get 4 lists:
+* **GET /follow/info** - get all follow related information. Returns 4 arrays:
     * **followers** - my followers
     * **followed** - users I follow
     * **followers_requests** - pending follow requests from users wants to follow me
     * **followed_requests** - my pending follow requests
+```
+Response:
+{
+    "followed": [],
+    "followed_requests": [],
+    "followers": [],
+    "followers_requests": []
+}
+```
 
 * **PUT /follow/:user_id** - send follow request
 * **PUT /follow/:user_id/unfollow** - unfollow user
 
-* **PUT /follow/followers/request/pending/:id/approve** - approve the pending request
-* **PUT /follow/followers/request/pending/:id/reject** - reject the pending request
+* **PUT /follow/followers/pending/:id/approve** - approve the pending request
+* **PUT /follow/followers/pending/:id/reject** - reject the pending request
 
-* **PUT /follow/followed/request/pending/:id/cancel** - cancel my pending follow request
+* **PUT /follow/followed/pending/:id/cancel** - cancel my pending follow request
 
 ### Geocoding
 
-* **POST /geo/rev/batch** - search places for the points set and clusters them . Returns the merged result of places from google ,here and repo
--example of body:    "points":[{
-                         "id":"1",
-                         "point":{
-                             "latitude":50.424949,
-                             "longitude":23.67908
-                         }
-                     },
-                     {
-                         "id":"2",
-                         "point":{
-                             "latitude":39.9860,
-                             "longitude":-120.3304
-                         }
-                     }],
-                     "radius": 85
-                 }
-
 * **GET /geo/rev?lat=..&long=..&radius=..** - search places for point and radius. Returns the merged result of places from google ,here and repo
+```
+Response:
+{
+    "aggregation_id": "ChIJy3tqPUwVkFQRuEM8cw5X8aY",
+    "address": {
+        "country": "United States",
+        "region": "WA",
+        "city": "King County",
+        "postal": "98121",
+        "address_line": "2236 3rd Ave"
+    },
+    "places": [
+        {
+            "place": {
+                "id": 1,
+                "external_id": "ChIJy3tqPUwVkFQRuEM8cw5X8aY",
+                "place_type": 1,
+                "title": "Korean Bamboo",
+                "tags": [
+                    "restaurant",
+                    "food",
+                    "point_of_interest",
+                    "establishment"
+                ],
+                "location": {
+                    "latitude": 47.6147389,
+                    "longitude": -122.3445459
+                },
+                "address": {
+                    "country": "United States",
+                    "region": "WA",
+                    "city": "King County",
+                    "postal": "98121",
+                    "address_line": "2236 3rd Ave"
+                },
+                "vicinity": "",
+                "phone_number": "+1 206-443-9898",
+                "rating": 0,
+                "website": ""
+            },
+            "distance": 12
+        },
+    ]
+}
+```
+
+* **POST /geo/rev/batch** - search places for the points sets. Creates points clusters with defined radius and searches places for the each cluster.
+```
+Request:
+{
+    "points":[
+        {
+            "id":"1",
+            "point":{
+                "latitude":47.6147389,
+                "longitude":-122.3445459
+            }
+        }
+    ],
+    "radius":85
+}
+
+Response:
+{
+    "clusters": [
+        {
+            "point_ids": [
+                "1"
+            ],
+            "center": {
+                "latitude": 47.61473889999999,
+                "longitude": -122.34454590000001
+            },
+            "places": [
+                {
+                    "place": {
+                        "id": 1,
+                        "external_id": "ChIJy3tqPUwVkFQRuEM8cw5X8aY",
+                        "place_type": 1,
+                        "title": "Korean Bamboo",
+                        .........
+                    },
+                    "distance": 0
+                },
+            ],
+            "with_error": false
+        }
+    ]
+}
+```
 
 ### Feed
 
@@ -93,7 +272,5 @@ In design
 
 ## Questions
 
-* Feed API
 * Design for the review edit
-* Get/Search place should return reviews or not?
 
