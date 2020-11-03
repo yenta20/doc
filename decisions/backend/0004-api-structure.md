@@ -41,6 +41,21 @@ Profile constraints:
 
 * **GET /profile/my_reviews** - get all reviews created by user
 
+### User
+
+* **GET /user/:id** - get any user by id
+```
+Response:
+{
+    "id": 1,
+    "name": "John Doe",
+    "nick": "deer",
+    "account_type": "public",
+    "bio": "",
+    "avatar": ""
+}
+```
+
 ### Reviews
 
 * **POST /reviews** - create a review
