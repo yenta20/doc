@@ -26,8 +26,15 @@ Response:
     "user_settings": {}
 }
 ```
-
-* **PUT /profile** - update profile
+* **PUT /profile** - create/update profile
+```
+Profile constraints:
+ - name: from 2 to 80 characters (can't be blank)
+ - nick: from 2 to 64 characters (can't be blank)
+ - account_type: `public` or `private` (empty value will be treated as `public`)
+ - email: from 6 to 50 characters (can't be blank)
+ - bio: any text (can be blank)
+```
 * **PUT /profile/avatar** - upload avatar
 * **PUT /profile/push_token** - set push token
 * **PUT /profile/logout** - logout (clear push token)
