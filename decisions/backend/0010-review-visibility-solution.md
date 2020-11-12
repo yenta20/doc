@@ -8,7 +8,7 @@ In progress
 
 ## Context
 
-Describes which reviews (public, private) should be returned to user, considering below cases:
+Describes which reviews (`public`, `private`) should be returned to user, considering below cases:
 * review readiness
 * user is owner
 * user is follower
@@ -17,10 +17,10 @@ Describes which reviews (public, private) should be returned to user, considerin
 
 Current implementation checks if caller is follower:
 * `false` - return all `public-ready` reviews
-* `true` - return  all `ready` reviews
+* `true` - return  all `private-public-ready` reviews
 
 What should be improved/refactored:
-1. If caller is owner, private reviews should be available.
+1. If caller is owner, `private-ready` reviews should be available.
 2. Should we return not ready reviews for the owner?
 
 Solution:
@@ -31,8 +31,8 @@ Solution:
 Current implementation returns only `public-ready` reviews.
 
 What should be improved/refactored:
-1. If caller is review owner, `private` reviews should be returned.
-2. If caller is an approved follower, `private` reviews should be returned.
+1. If caller is review owner, `private-ready` reviews should be returned.
+2. If caller is an approved follower, `private-ready` reviews should be returned.
 
 Solution:
 * Below `select` can be used to improve query in `repository`:
