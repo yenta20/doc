@@ -16,7 +16,7 @@ Recon API structure proposal
 
 #### Pagination
 
-Pagination is implemented using **limit/offset** query params (expect pagination for feed).
+Pagination is implemented using **limit/offset** query params (except pagination for feed).
 All methods with pagination must support the default values for query parameters (if paramater is missing use 
 the default value).
 
