@@ -12,6 +12,18 @@ Recon API structure proposal
 
 ## Decision
 
+### General
+
+#### Pagination
+
+Pagination is implemented using **limit/offset** query params (expect pagination for feed).
+All methods with pagination must support the default values for query parameters (if paramater is missing use 
+the default value).
+
+The values:
+ * limit == 20
+ * offset == 0
+
 ### Profile
 
 * **GET /profile** - get current user profile
@@ -28,11 +40,11 @@ Response:
 ```
 * **PUT /profile** - create/update profile
 ```
-Profile constraints:
- - name: from 2 to 80 characters (can't be blank)
- - nick: from 2 to 64 characters (can't be blank)
+*Profile constraints:*
+ - name: from 2 to 80 characters, can't be blank, leading and trailing spaces are trimmed, spaces inside allowed
+ - nick: from 2 to 64 characters, can't be blank, leading and trailing spaces are trimmed, spaces inside are not allowed
  - account_type: `public` or `private` (empty value will be treated as `public`)
- - email: from 6 to 50 characters (can't be blank)
+ - email: no restrictions because user can't edit email in application
  - bio: any text (can be blank)
 ```
 * **PUT /profile/avatar** - upload avatar
@@ -40,6 +52,8 @@ Profile constraints:
 * **PUT /profile/logout** - logout (clear push token)
 
 * **GET /profile/my_reviews** - get all reviews created by user
+
+* **GET /profile/availability?nick=...*** - ....
 
 ### User
 
