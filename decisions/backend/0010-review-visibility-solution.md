@@ -13,6 +13,11 @@ Describes which reviews (`public`, `private`) should be returned to user, consid
 * user is owner
 * user is follower
 
+### Design
+
+Relationship provider component can be used to resolve relation between caller and API userID: 
+<img src="img/relationship_provider.png"/>
+
 ### User reviews API [`/user/:id/reviews`]
 
 Current implementation checks if caller is follower:
