@@ -15,46 +15,21 @@ Describes which reviews (`public`, `private`) should be returned to user, consid
 
 ### Design
 
-Relationship provider component can be used to resolve relation between caller and API userID: 
-<img src="img/relationship_provider.png"/>
+Visibility constraints implemented on DB layer.
 
 ### User reviews API [`/user/:id/reviews`]
 
-Current implementation checks if caller is follower:
+API manager checks if caller is follower:
 * `false` - return all `public-ready` reviews
 * `true` - return  all `private-public-ready` reviews
 
-What should be improved/refactored:
-1. If caller is owner, `private-ready` reviews should be available.
-2. Should we return not ready reviews for the owner?
-
-Solution:
-* Additional check on `manager` layer (for owner role) and query improvement on `repository` layer.
-
 ### Place reviews API [`/place/:id/reviews`]
 
-Current implementation returns only `public-ready` reviews.
+Returns `private-public-ready` reviews if caller is:
+* review owner.
+* an approved follower.
 
-What should be improved/refactored:
-1. If caller is review owner, `private-ready` reviews should be returned.
-2. If caller is an approved follower, `private-ready` reviews should be returned.
-
-Solution:
-* Below `select` can be used to improve query in `repository`:
-```postgresql
-with followed AS (
-    select user_id
-    from user_follower
-    where follower_id = <caller_id> and status = 'accepted'
-)
-select *
-from review r
-join user_profile up on r.user_id = up.id
-where r.place_id = <place_id> and r.ready = true
-      and ((r.visibility = 'public')
-           or (r.visibility = 'private' and r.user_id = <caller_id>)
-           or (r.visibility = 'private' and r.user_id in (select user_id from followed)));
-```
+Returns only `public-ready` reviews in other cases.
 
 ### Feed reviews
 

@@ -25,9 +25,9 @@ API accepts DTO:
 }
 ```
 
-Current validation rules:
-* name: trim spaces, must start with `[0-9A-Za-z]` up to 80 any characters.
-* nick: trim spaces, must start with `[0-9A-Za-z]` up to 80 any characters.
-* account_type: must be empty, `public` or `private` case-sensitive string (empty will be replaced with `public`).
-* bio: any text.
-* email: no validation, but DB accepts up to 50 characters.
+Validation constraints:
+ - name: from 2 to 80 characters, can't be blank, leading and trailing spaces are trimmed, spaces inside allowed
+ - nick: from 2 to 80 characters, can't be blank, leading and trailing spaces are trimmed, only alpha-numeric characters allowed (without spaces inside)
+ - account_type: `public` or `private` (empty value will be treated as `public`)
+ - email: no restrictions because user can't edit email in application
+ - bio: any text (can be blank)
