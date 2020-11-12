@@ -40,7 +40,7 @@ Response:
 ```
 * **PUT /profile** - create/update profile
 ```
-*Profile constraints:*
+Profile constraints:
  - name: from 2 to 80 characters, can't be blank, leading and trailing spaces are trimmed, spaces inside allowed
  - nick: from 2 to 64 characters, can't be blank, leading and trailing spaces are trimmed, spaces inside are not allowed
  - account_type: `public` or `private` (empty value will be treated as `public`)
