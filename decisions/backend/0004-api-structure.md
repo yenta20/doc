@@ -43,9 +43,12 @@ Response:
 * **PUT /profile/push_token** - set push token
 * **PUT /profile/logout** - logout (clear push token)
 
-* **GET /profile/my_reviews** - get all reviews created by user
+* **GET /profile/my_reviews?offset=..&limit=..** - get all reviews created by user
+```
+Response similar to /places/:id/reviews
+```
 
-* **GET /profile/availability?nick=...*** - ....
+* **GET /profile/availability?nick=...*** - return 200 if nick avaible; return 409  if nickname not available
 
 ### User
 
@@ -60,6 +63,11 @@ Response:
     "bio": "",
     "avatar": ""
 }
+```
+
+* **GET /user/:id/reviews?offset=..&limit=..** - get user reviews
+```
+Response similar to /places/:id/reviews
 ```
 
 ### Reviews
@@ -87,54 +95,111 @@ Request:
 ```
 Response:
 {
-    "review": {
+    "id": 1,
+    "creator": 1,
+    "created": "2020-11-18T10:49:52Z",
+    "place": {
         "id": 1,
-        "creator": 1,
-        "created": "2020-10-18T14:24:10Z",
-        "place": {
-            "id": 1,
-            "external_id": "ChIJy3tqPUwVkFQRuEM8cw5X8aY",
-            "place_type": 1,
-            "title": "Korean Bamboo",
-            "tags": [
-                "restaurant",
-                "food",
-                "point_of_interest",
-                "establishment"
-            ],
-            "location": {
-                "latitude": 47.6147389,
-                "longitude": -122.3445459
-            },
-            "address": {
-                "country": "United States",
-                "region": "WA",
-                "city": "King County",
-                "postal": "98121",
-                "address_line": "2236 3rd Ave"
-            },
-            "vicinity": "",
-            "phone_number": "+1 206-443-9898",
-            "rating": 0,
-            "website": ""
+        "external_id": {
+            "id": "50a2bd98e4b070229a45269d",
+            "place_type": 3
         },
-        "text": "Perfect place for lunch",
-        "stars": 5,
-        "images": [
+        "title": "Local Pho",
+        "tags": [
+            "Vietnamese Restaurant"
+        ],
+        "location": {
+            "latitude": 47.6146226,
+            "longitude": -122.3446252
+        },
+        "address": {
+            "country": "United States",
+            "region": "Washington",
+            "county": "King",
+            "city": "Seattle",
+            "postal": "98121-2019",
+            "address_line": "3rd Ave 2230"
+        },
+        "formatted_address": "3rd Ave 2230 Seattle 98121-2019",
+        "phone_number": "",
+        "web_site": "",
+        "rating": 0,
+        "reviews_count": 1,
+        "distance": 0,
+        "completed": false,
+        "sources": [
             {
-                "id": 1,
-                "url": "https://storage.googleapis.com/image-store-local-eugenf/0835074b-fa1c-4cc8-b6ec-54a828b3ea9a"
+                "id": "50a2bd98e4b070229a45269d",
+                "place_type": 3
+            },
+            {
+                "id": "here:pds:place:840c22yz-cdd24b4782144d51b49444fe402d01d8",
+                "place_type": 2
             }
         ]
-    }
+    },
+    "text": "Perfect place for lunch",
+    "visibility": "public",
+    "stars": 5,
+    "images": [
+        {
+            "id": 1,
+            "url": "https://storage.googleapis.com/image-store-local-razorback/34a68f45-9e3c-479c-828e-1b043dbb52a4"
+        }
+    ]
 }
 ```
 
 ### Places
 
-* **GET /places/search/area?top_left_lat=..&top_left_long=..&bottom_right_lat=..&bottom_right_long=..** - search in the rectange area. Returns only registered places.
+* **GET /places/search/area?top_left=..&bottom_right=..&place_filter=..** - search in the rectange area. Returns only registered places.
+- example of coordinates: "47.614017,-122.343562
+- place_filter: "all" - returns all places in this area. "with_review" - returns places that have completed reviews.
 
 * **GET /places/:id** - get the registered place info.
+```
+Response:
+    {
+        "id": 1,
+        "external_id": {
+            "id": "50a2bd98e4b070229a45269d",
+            "place_type": 3
+        },
+        "title": "Local Pho",
+        "tags": [
+            "Vietnamese Restaurant"
+        ],
+        "location": {
+            "latitude": 47.6146226,
+            "longitude": -122.3446252
+        },
+        "address": {
+            "country": "United States",
+            "region": "Washington",
+            "county": "King",
+            "city": "Seattle",
+            "postal": "98121-2019",
+            "address_line": "3rd Ave 2230"
+        },
+        "formatted_address": "3rd Ave 2230 Seattle 98121-2019",
+        "phone_number": "",
+        "web_site": "",
+        "rating": 0,
+        "reviews_count": 1,
+        "distance": 0,
+        "completed": false,
+        "sources": [
+            {
+                "id": "50a2bd98e4b070229a45269d",
+                "place_type": 3
+            },
+            {
+                "id": "here:pds:place:840c22yz-cdd24b4782144d51b49444fe402d01d8",
+                "place_type": 2
+            }
+        ]
+    }
+```
 
 * **GET /places/:id/reviews?offset=..&limit=..** - get all ready reviews for place.
 ```
@@ -159,6 +224,7 @@ Response:
             ]
         }
     ],
+    "places": [],
     "users": [
         {
             "id": 1,
