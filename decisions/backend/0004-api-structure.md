@@ -25,15 +25,16 @@ The values:
  * offset == 0
    
 # Table of contents
-1. [Profile](#profile-a-nameprofilea)
-2. [User](#user-a-nameusera)
-3. [Reviews](#reviews-a-namereviewsa)
-4. [Places](#places-a-nameplacesa)
-5. [Followers](#followers-a-namefollowersa)
-6. [Geocoding](#geocoding-a-namegeocodinga)
-7. [Feed](#feed-a-namefeeda)
+1. [Profile](#profile)
+2. [User](#user)
+3. [Reviews](#reviews)
+4. [Places](#places)
+5. [Followers](#followers)
+6. [Geocoding](#geocoding)
+7. [Feed](#feed)
 
-## Profile <a name="profile"></a>
+## <a name="profile"></a>
+## Profile
 
 * **GET /profile** - get current user profile
 ```
@@ -59,7 +60,8 @@ Response similar to /places/:id/reviews
 
 * **GET /profile/availability?nick=...*** - return 200 if nick avaible; return 409  if nickname not available
 
-## User <a name="user"></a>
+## <a name="user"></a>
+## User
 
 * **GET /user/:id** - get any user by id
 ```
@@ -96,7 +98,8 @@ Response:
 }
 ```
 
-## Reviews <a name="reviews"></a>
+## <a name="reviews"></a>
+## Reviews
 
 * **POST /reviews** - create a review
 ```
@@ -176,7 +179,8 @@ Response:
 }
 ```
 
-## Places <a name="places"></a>
+## <a name="places"></a>
+## Places
 
 * **GET /places/search/area?rect=..** - search in the rectange area or with point and radius. Returns only registered places.
 Optional:
@@ -270,7 +274,8 @@ Response:
 }
 ```
 
-## Followers <a name="followers"></a>
+## <a name="followers"></a>
+## Followers 
 
 * **GET /follow/info** - get all follow related information. Returns 4 arrays:
     * **followers** - my followers
@@ -295,7 +300,8 @@ Response:
 
 * **PUT /follow/followed/pending/:id/cancel** - cancel my pending follow request
 
-## Geocoding <a name="geocoding"></a>
+## <a name="geocoding"></a>
+## Geocoding 
 
 * **GET /geo/rev?lat=..&long=..&radius=..** - search places for point and radius. Returns the merged result of places from google ,here and repo
 ```
@@ -389,7 +395,8 @@ Response:
 }
 ```
 
-## Feed <a name="feed"></a>
+## <a name="feed"></a>
+## Feed
 
 * **GET /feed?from=..&to=..&limit=..** - get feed
 
