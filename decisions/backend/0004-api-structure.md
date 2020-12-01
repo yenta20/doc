@@ -14,7 +14,7 @@ Recon API structure proposal
 
 ### General
 
-#### Pagination
+## Pagination
 
 Pagination is implemented using **limit/offset** query params (except pagination for feed).
 All methods with pagination must support the default values for query parameters (if paramater is missing use 
@@ -23,8 +23,17 @@ the default value).
 The values:
  * limit == 20
  * offset == 0
+   
+# Table of contents
+1. [Profile](#profile-a-nameprofilea)
+2. [User](#user-a-nameusera)
+3. [Reviews](#reviews-a-namereviewsa)
+4. [Places](#places-a-nameplacesa)
+5. [Followers](#followers-a-namefollowersa)
+6. [Geocoding](#geocoding-a-namegeocodinga)
+7. [Feed](#feed-a-namefeeda)
 
-### Profile
+## Profile <a name="profile"></a>
 
 * **GET /profile** - get current user profile
 ```
@@ -50,7 +59,7 @@ Response similar to /places/:id/reviews
 
 * **GET /profile/availability?nick=...*** - return 200 if nick avaible; return 409  if nickname not available
 
-### User
+## User <a name="user"></a>
 
 * **GET /user/:id** - get any user by id
 ```
@@ -70,7 +79,24 @@ Response:
 Response similar to /places/:id/reviews
 ```
 
-### Reviews
+* **GET /user/search?name=..?limit=..** - search user by name
+```
+Response:
+{
+   "users": [
+           {
+               "id": 1,
+               "name": "John Doe",
+               "nick": "deer",
+               "account_type": "public",
+               "bio": "Nothing special",
+               "avatar": ""
+           }
+       ]
+}
+```
+
+## Reviews <a name="reviews"></a>
 
 * **POST /reviews** - create a review
 ```
@@ -150,11 +176,12 @@ Response:
 }
 ```
 
-### Places
+## Places <a name="places"></a>
 
-* **GET /places/search/area?top_left=..&bottom_right=..&place_filter=..** - search in the rectange area. Returns only registered places.
-- example of coordinates: "47.614017,-122.343562
-- place_filter: "all" - returns all places in this area. "with_review" - returns places that have completed reviews.
+* **GET /places/search/area?rect=..** - search in the rectange area or with point and radius. Returns only registered places.
+Optional:
+- ?rect=47.6146226,-122.3446252,47.614017,-122.343562
+- ?at=47.6146226,-122.3446252&radius=20 
 
 * **GET /places/:id** - get the registered place info.
 ```
@@ -201,6 +228,12 @@ Response:
     }
 ```
 
+* **GET /places/search?q=..&rect=..** - text search in the rectange area or with point and radius or with location. q is mandatory.
+Optional:
+- &rect=47.6146226,-122.3446252,47.614017,-122.343562
+- &at=47.6146226,-122.3446252&radius=20
+- &loc=Los Angeles
+
 * **GET /places/:id/reviews?offset=..&limit=..** - get all ready reviews for place.
 ```
 Response:
@@ -237,7 +270,7 @@ Response:
 }
 ```
 
-### Followers
+## Followers <a name="followers"></a>
 
 * **GET /follow/info** - get all follow related information. Returns 4 arrays:
     * **followers** - my followers
@@ -262,7 +295,7 @@ Response:
 
 * **PUT /follow/followed/pending/:id/cancel** - cancel my pending follow request
 
-### Geocoding
+## Geocoding <a name="geocoding"></a>
 
 * **GET /geo/rev?lat=..&long=..&radius=..** - search places for point and radius. Returns the merged result of places from google ,here and repo
 ```
@@ -356,7 +389,7 @@ Response:
 }
 ```
 
-### Feed
+## Feed <a name="feed"></a>
 
 * **GET /feed?from=..&to=..&limit=..** - get feed
 
@@ -367,4 +400,3 @@ In design
 ## Questions
 
 * Design for the review edit
-
