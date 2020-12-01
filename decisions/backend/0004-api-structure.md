@@ -25,13 +25,13 @@ The values:
  * offset == 0
    
 # Table of contents
-1. [Profile](#profile-a-nameprofilea)
-2. [User](#user-a-nameusera)
-3. [Reviews](#reviews-a-namereviewsa)
-4. [Places](#places-a-nameplacesa)
-5. [Followers](#followers-a-namefollowersa)
-6. [Geocoding](#geocoding-a-namegeocodinga)
-7. [Feed](#feed-a-namefeeda)
+1. [Profile](#profile)
+2. [User](#user)
+3. [Reviews](#reviews)
+4. [Places](#places)
+5. [Followers](#followers)
+6. [Geocoding](#geocoding)
+7. [Feed](#feed)
 
 ## Profile <a name="profile"></a>
 
