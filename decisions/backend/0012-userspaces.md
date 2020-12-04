@@ -8,8 +8,8 @@ In progress
 
 ## Context
 
-We need a fast way to provide user-specific places, reviews, and ratings. It means the use sees only places rated by users that he follows, with the ratings calculated separated for each user.
-
+We need a fast way to provide user-specific places, reviews, and ratings. It means the user sees only places rated by users that he follows, with the ratings calculated separated for each user.
+```
 User1 follows User2 and User3
 User2 follows User3
 
@@ -19,14 +19,23 @@ User3 reviewed Place1 with rating 2
 User1 sees Place1 with rating 3=(5+1)/2 and Place2 with rating 1
 User2 -> Place1 3.5, Place2 1
 User3 -> Place1 2
+```
 
 So, each user has a specific set of places.
 
 ## Decision
 
-The solution is to create a 'userspace' for each user. Userspace is the set of collections in the NoSQL describes places, reviews, etc that visible for the user.
+The solution is to create a `userspace` for each user. Userspace is the set of collections in the NoSQL describes places, reviews, feed, etc that visible for the user.
 
 Userspace is updated eventually on events happening in the system (new review, follow accepted, etc).
+
+### The search types
+
+Recon API provides two different search types.
+* geo search (search on map) - the POIs list is created based on userspace;
+* text search - search for global POIs database (no userspaces).
+
+<img src="img/recon_places_search.png" />
 
 ### The approach architecture
 
@@ -39,14 +48,6 @@ and after
 * hydrates POI with personal ratings
 
 <img src="img/recon_search_area.png" />
-
-### The search types
-
-Recon API provides two different search types.
-* geo search (search on map) - the POIs list is created based on userspace;
-* text search - search for global POIs database (no userspaces).
-
-<img src="img/recon_places_search.png" />
 
 ### Userspace update scenarios
 
