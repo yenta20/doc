@@ -10,15 +10,18 @@ In progress
 
 We need a fast way to provide user-specific places, reviews, and ratings. It means the user sees only places rated by users that he follows, with the ratings calculated separated for each user.
 ```
-User1 follows User2 and User3
+User1 follows User2, User3, User4
 User2 follows User3
+User3 and User4 don't follow anybody
 
-User2 reviewed Place1 with rating 5 and Place2 with rating 1
-User3 reviewed Place1 with rating 2
+User2 reviewed Place1 -> rating 6 and Place2 -> rating 2
+User3 reviewed Place1 -> rating 2
+User4 reviewed Place1 -> rating 10, Place2 -> rating 10
 
-User1 sees Place1 with rating 3=(5+1)/2 and Place2 with rating 1
-User2 -> Place1 3.5, Place2 1
-User3 -> Place1 2
+User1 sees: [Place1: 6, Place2: 6]
+User2: [Place1: 4, Place2: 2]
+User3: [Place1: 2]
+User3: [Place1: 10, Place2: 10]
 ```
 
 So, each user has a specific set of places.
