@@ -50,7 +50,7 @@ Response:
 ```
 * **PUT /profile** - create/update profile
 * **PUT /profile/avatar** - upload avatar
-* **PUT /profile/push_token** - set push token
+* **PUT /profile/push_token?token={token}** - set push token
 * **PUT /profile/logout** - logout (clear push token)
 
 * **GET /profile/my_reviews?offset=..&limit=..** - get all reviews created by user
