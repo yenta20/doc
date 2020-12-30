@@ -18,7 +18,7 @@ Use PostGIS with special timezone boundary table, which can be created from GEO 
 ### Local environment setup
 
 No manual steps required.
-Postgres DB will be started from `Dockerfile.postgis` with all required modules and data:
+Postgres DB will be started from `https://hub.docker.com/repository/docker/vky8411/postgis` with all required modules and data:
 - PostGIS
 - shp2pgsql: PostGIS converter (`shp` -> `sql`)
 - Timezone SQL dump
