@@ -120,6 +120,15 @@ Request:
 
 * **PUT /reviews/:id/complete** - complete a review
 
+* **POST /reviews/:id/like** - add like
+- :id - review ID
+
+* **DELETE /reviews/:id/like** - remove like
+- :id - review ID
+
+* **GET /reviews/:id/likes** - return users who liked review
+- :id - review ID
+
 * **GET /reviews/:id** - get review by id
 ```
 Response:
