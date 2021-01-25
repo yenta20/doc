@@ -41,7 +41,7 @@ Also, to save money `alert-manager` component should be disabled for `non-prod` 
 
 * Configure `gcloud` Docker credential helper: `gcloud auth configure-docker`
 
-* Setup GKE with Application understanding resources: `kubectl apply -f "https://raw.githubusercontent.com/GoogleCloudPlatform/marketplace-k8s-app-tools/master/crd/app-crd.yaml`
+* Setup GKE with Application understanding resources: `kubectl apply -f "https://raw.githubusercontent.com/GoogleCloudPlatform/marketplace-k8s-app-tools/master/crd/app-crd.yaml"`
 
 * Clone `click-to-deploy` repository: git clone --recursive https://github.com/GoogleCloudPlatform/click-to-deploy.git
 
