@@ -23,5 +23,6 @@ So, users will be able to download previews without hitting Recon API and with s
 
 * Select `Use origin settings based on Cache-Control headers` and click `Save`: <img src="img/cdn/cdn_4.png" />
 
-### CDN cache invalidation
+## CDN cache invalidation
 
+Preview service will use GCP CDN API for review preview cache invalidation after review edit/delete.
