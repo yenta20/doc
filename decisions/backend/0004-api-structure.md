@@ -41,24 +41,179 @@ The values:
 Response:
 {
     "id": 1,
+    "nick": "john123",
     "name": "John Doe",
-    "age": 23,
+    "account_type": "public",
+    "bio": "It is my bio",
     "email": "john.doe@hell.com",
-    "avatar": "https://storage.googleapis.com/avatar-store-local-eugenf/30db7f00-7776-4259-a4f8-8aeb01622df6",
-    "user_settings": {}
+    "phone": "+123456789",
+    "avatar": "https://storage.googleapis.com/avatar-store-local-eugenf/30db7f00-7776-4259-a4f8-8aeb01622df6"
+    "activation_code": ""
 }
 ```
 * **PUT /profile** - create/update profile
+```
+Request:
+{
+    "nick": "deer",
+    "account_type":"public",
+    "name": "John Doe",   
+    "bio": "Nothing special",
+    "email": "john.doe@hell.com"
+}
+```
+```
+Response:
+{
+    "id": 1,
+    "nick": "deer",
+    "account_type": "public",
+    "name": "John Doe",
+    "bio": "Nothing special",
+    "avatar": "",
+    "email": "john.doe@hell.com",
+    "activation_code": ""
+}
+```
 * **PUT /profile/avatar** - upload avatar
-* **PUT /profile/push_token?token={token}** - set push token
+* **PUT /profile/push_token?token=..** - set push token
 * **PUT /profile/logout** - logout (clear push token)
-
-* **GET /profile/my_reviews?offset=..&limit=..** - get all reviews created by user
+* **GET /profile/my_reviews/image_ids** - get all user's image ids
 ```
-Response similar to /places/:id/reviews
+Response:
+{
+    "ids": [
+        "id-1",
+        "id-2"
+    ]
+}
+```  
+* **GET /profile/settings** - get current user settings
+```
+Response:
+{
+    "push_notifications": true,
+    "follow_accepted_push": true
+}
+```
+* **PUT /profile/settings** - update current user settings
+```
+Request:
+{
+    "push_notifications": true,
+    "follow_accepted_push": true
+}
+```  
+* **GET /profile/follow_suggestions** - get follow suggestions for current user
+```
+Response:
+[
+    {
+        "id": 1,
+        "name": "John Doe",
+        "nick": "deer",
+        "account_type": "public",
+        "bio": "Nothing special",
+        "avatar": ""
+    }
+]
 ```
 
-* **GET /profile/availability?nick=...*** - return 200 if nick avaible; return 409  if nickname not available
+* **GET /profile/my_reviews?offset=..&limit=..&type=..** - get all reviews created by user
+```
+Response:
+{
+    "places": [
+        {
+            "id": 1,
+            "external_id": {
+                "id": "50a2bd98e4b070229a45269d",
+                "place_type": 3
+            },
+            "title": "Local Pho",
+            "tags": [
+                "Vietnamese Restaurant"
+            ],
+            "location": {
+                "latitude": 47.614623,
+                "longitude": -122.344625
+            },
+            "address": {
+                "country": "United States",
+                "region": "Washington",
+                "county": "King",
+                "city": "Seattle",
+                "postal": "98121-2019",
+                "address_line": "3rd Ave 2230"
+            },
+            "formatted_address": "3rd Ave 2230 Seattle 98121-2019",
+            "phone_number": "",
+            "web_site": "",
+            "distance": 0,
+            "sources": [
+                {
+                    "id": "50a2bd98e4b070229a45269d",
+                    "place_type": 3
+                },
+                {
+                    "id": "here:pds:place:840c22yz-cdd24b4782144d51b49444fe402d01d8",
+                    "place_type": 2
+                }
+            ],
+            "timezone": "",
+            "hours": {},
+            "public_rating": 2.5,
+            "public_review_count": 1,
+            "private_rating": 0,
+            "private_review_count": 0,
+            "now": {
+                "is_available": false,
+                "is_opened": false,
+                "will_open_today": false,
+                "till_close": "00:00:00",
+                "till_open": "00:00:00"
+            }
+        }
+    ],
+    "reviews": [
+        {
+            "id": 1,
+            "creator": 1,
+            "created": "2021-02-17T10:17:45Z",
+            "place": {
+                "id": 1
+            },
+            "text": "Perfect place for lunch",
+            "visibility": "public",
+            "stars": 5,
+            "is_kitchen": false,
+            "images": [
+                {
+                    "id": 1,
+                    "url": "https://storage.googleapis.com/image-store-local-bohdan/c0meqjc2qtansgmqect0"
+                }
+            ],
+            "likes_counter": 0,
+            "liked_by_me": false,
+            "comments": {
+                "object_id": 0,
+                "parent_id": 0,
+                "items": null,
+                "users": null,
+                "total_count": 0,
+                "limit": 0,
+                "offset": 0
+            },
+            "feed_position": 0
+        }
+    ],
+    "limit": 20,
+    "offset": 0
+}
+```
+- ***type*** - "poi" or "kitchen"
+
+* **GET /profile/availability?nick=...*** - return 200 if nick available; return 409  if nickname not available
 
 ## <a name="user"></a>
 ## User
@@ -78,7 +233,7 @@ Response:
 
 * **GET /user/:id/reviews?offset=..&limit=..** - get user reviews
 ```
-Response similar to /places/:id/reviews
+Response similar to /profile/my_reviews
 ```
 
 * **GET /user/search?name=..?limit=..** - search user by name
@@ -97,11 +252,82 @@ Response:
        ]
 }
 ```
+* **GET /user/:id/places** - get user reviewed places
+- Optional:
+- ?rect=47.6146226,-122.3446252,47.614017,-122.343562
+```
+Response
+{
+    "places": [
+        {
+            "id": 1,
+            "external_id": {
+                "id": "50a2bd98e4b070229a45269d",
+                "place_type": 3
+            },
+            "title": "Local Pho",
+            "tags": [
+                "Vietnamese Restaurant"
+            ],
+            "location": {
+                "latitude": 47.614623,
+                "longitude": -122.344625
+            },
+            "address": {
+                "country": "United States",
+                "region": "Washington",
+                "county": "King",
+                "city": "Seattle",
+                "postal": "98121-2019",
+                "address_line": "3rd Ave 2230"
+            },
+            "formatted_address": "3rd Ave 2230 Seattle 98121-2019",
+            "phone_number": "",
+            "web_site": "",
+            "distance": 0,
+            "sources": [
+                {
+                    "id": "50a2bd98e4b070229a45269d",
+                    "place_type": 3
+                },
+                {
+                    "id": "here:pds:place:840c22yz-cdd24b4782144d51b49444fe402d01d8",
+                    "place_type": 2
+                }
+            ],
+            "timezone": "",
+            "hours": {},
+            "public_rating": 2.5,
+            "public_review_count": 1,
+            "private_rating": 0,
+            "private_review_count": 0,
+            "now": {
+                "is_available": false,
+                "is_opened": false,
+                "will_open_today": false,
+                "till_close": "00:00:00",
+                "till_open": "00:00:00"
+            }
+        }
+    ],
+    "rect": {
+        "top_left": {
+            "latitude": 0,
+            "longitude": 0
+        },
+        "bottom_right": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    }
+}
+```
 
 ## <a name="reviews"></a>
 ## Reviews
 
 * **POST /reviews** - create a review
+- ***POI***
 ```
 Request:
 {
@@ -110,25 +336,48 @@ Request:
         "place_type": 1
     },
     "text": "Perfect place for lunch",
-    "stars": 5
+    "stars": 5,
+    "image_ids": ["id-3", "id-4"]
 }
+```
+- ***Kitchen***
+```
+Request:
+{
+    "text": "Perfect place for lunch",
+    "stars": 5,
+    "is_kitchen": true,
+    "image_ids": ["id-3", "id-4"]
+}
+
 ```
 
 * **POST /reviews/:id/images/:number** - upload an image
-- :id - review ID
-- :number - image position
+- ***id*** - review ID
+- ***number*** - image position
 
 * **PUT /reviews/:id/complete** - complete a review
 
 * **POST /reviews/:id/like** - add like
-- :id - review ID
 
 * **DELETE /reviews/:id/like** - remove like
-- :id - review ID
 
 * **GET /reviews/:id/likes** - return users who liked review
-- :id - review ID
-
+```
+Response:
+{
+   "users": [
+           {
+               "id": 1,
+               "name": "John Doe",
+               "nick": "deer",
+               "account_type": "public",
+               "bio": "Nothing special",
+               "avatar": ""
+           }
+       ]
+}
+```
 * **GET /reviews/:id** - get review by id
 ```
 Response:
@@ -187,11 +436,66 @@ Response:
     ]
 }
 ```
+* **PUT /reviews/:id/preview/generate** - generate preview
+```
+Response:
+{
+    "url": "http://localhost:9124/preview/v1/reviews/c0mf4gc2qtansgmqectg"
+}
+```  
+* **GET /reviews/by_preview/:id** - get review by preview ID
+* **DELETE /reviews/:id** - delete review
+* **POST /reviews/:id/comments** - add comment
+```
+Request:
+{
+    "text": "my first comment"
+}
+```  
+* **PUT /reviews/:id/comments/:comment_id** update comment
+* **DELETE /reviews/:id/comments/:comment_id** - delete comment
+* **GET /reviews/:id/comments?offset=..&limit=..** - get comments
+```
+Response:
+{
+    "object_id": 1,
+    "parent_id": 0,
+    "items": [
+        {
+            "id": 1,
+            "author_id": 1,
+            "published_at": "2021-02-16T16:22:28Z",
+            "parent_id": 0,
+            "content": {
+                "text": "my first comment"
+            },
+            "replies_count": 0,
+            "replies": null
+        }
+    ],
+    "users": [
+        {
+            "id": 1,
+            "name": "John Doe",
+            "nick": "deer",
+            "account_type": "public",
+            "bio": "Nothing special",
+            "avatar": ""
+        }
+    ],
+    "total_count": 1,
+    "limit": 20,
+    "offset": 0
+}
+```
+
+- **object_id** - review id
+- **parent_id** - not implemented yet
 
 ## <a name="places"></a>
 ## Places
 
-* **GET /places/search/area?rect=..** - search in the rectange area or with point and radius. Returns only registered places.
+* **GET /places/search/area?rect=..** - search in the rectangle area or with point and radius. Returns only registered places.
 Optional:
 - ?rect=47.6146226,-122.3446252,47.614017,-122.343562
 - ?at=47.6146226,-122.3446252&radius=20 
@@ -199,49 +503,88 @@ Optional:
 * **GET /places/:id** - get the registered place info.
 ```
 Response:
-    {
-        "id": 1,
-        "external_id": {
+{
+    "id": 1,
+    "external_id": {
+        "id": "50a2bd98e4b070229a45269d",
+        "place_type": 3
+    },
+    "title": "Local Pho",
+    "tags": [
+        "Vietnamese Restaurant"
+    ],
+    "location": {
+        "latitude": 47.614623,
+        "longitude": -122.344625
+    },
+    "address": {
+        "country": "United States",
+        "region": "Washington",
+        "county": "King",
+        "city": "Seattle",
+        "postal": "98121-2019",
+        "address_line": "3rd Ave 2230"
+    },
+    "formatted_address": "3rd Ave 2230 Seattle 98121-2019",
+    "phone_number": "(206) 441-5995",
+    "web_site": "http://localpho-seattle.com",
+    "distance": 0,
+    "sources": [
+        {
             "id": "50a2bd98e4b070229a45269d",
             "place_type": 3
         },
-        "title": "Local Pho",
-        "tags": [
-            "Vietnamese Restaurant"
-        ],
-        "location": {
-            "latitude": 47.6146226,
-            "longitude": -122.3446252
-        },
-        "address": {
-            "country": "United States",
-            "region": "Washington",
-            "county": "King",
-            "city": "Seattle",
-            "postal": "98121-2019",
-            "address_line": "3rd Ave 2230"
-        },
-        "formatted_address": "3rd Ave 2230 Seattle 98121-2019",
-        "phone_number": "",
-        "web_site": "",
-        "rating": 0,
-        "reviews_count": 1,
-        "distance": 0,
-        "completed": false,
-        "sources": [
+        {
+            "id": "here:pds:place:840c22yz-cdd24b4782144d51b49444fe402d01d8",
+            "place_type": 2
+        }
+    ],
+    "timezone": "America/Los_Angeles",
+    "hours": {
+        "frames": [
             {
-                "id": "50a2bd98e4b070229a45269d",
-                "place_type": 3
-            },
-            {
-                "id": "here:pds:place:840c22yz-cdd24b4782144d51b49444fe402d01d8",
-                "place_type": 2
+                "days": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                ],
+                "open": [
+                    {
+                        "start": "1100",
+                        "end": "2130"
+                    }
+                ]
             }
         ]
+    },
+    "public_rating": 2.5,
+    "public_review_count": 1,
+    "private_rating": 2.5,
+    "private_review_count": 1,
+    "last_reviewers": [
+        {
+            "id": 1,
+            "name": "John Doe",
+            "nick": "deer",
+            "account_type": "public",
+            "bio": "Nothing special",
+            "avatar": ""
+        }
+    ],
+    "now": {
+        "is_available": true,
+        "is_opened": false,
+        "will_open_today": true,
+        "till_close": "00:00:00",
+        "till_open": "08:16:00"
     }
+}
 ```
 
-* **GET /places/search?q=..&rect=..** - text search in the rectange area or with point and radius or with location. q is mandatory.
+* **GET /places/search?q=..&rect=..** - text search in the rectangle area or with point and radius or with location. q is mandatory.
 Optional:
 - &rect=47.6146226,-122.3446252,47.614017,-122.343562
 - &at=47.6146226,-122.3446252&radius=20
@@ -251,35 +594,50 @@ Optional:
 ```
 Response:
 {
-    "reviews": [
-        {
-            "id": 1,
-            "creator": 1,
-            "created": "2020-10-18T14:24:10Z",
-            "place": {
-                "id": 1,
-                .......
-            },
-            "text": "Perfect place for lunch",
-            "stars": 5,
-            "images": [
-                {
-                    "id": 1,
-                    "url": "https://storage.googleapis.com/image-store-local-eugenf/0835074b-fa1c-4cc8-b6ec-54a828b3ea9a"
-                }
-            ]
-        }
-    ],
-    "places": [],
     "users": [
         {
             "id": 1,
             "name": "John Doe",
-            "avatar": "https://storage.googleapis.com/image-store-local-eugenf/30db7f00-7776-4259-a4f8-8aeb01622df6",
+            "nick": "deer",
+            "account_type": "public",
+            "bio": "Nothing special",
+            "avatar": ""
         }
     ],
-    "from": 0,
-    "limit": 5
+    "reviews": [
+        {
+            "id": 1,
+            "creator": 1,
+            "created": "2021-02-17T10:17:45Z",
+            "place": {
+                "id": 1
+            },
+            "text": "Perfect place for lunch",
+            "visibility": "public",
+            "stars": 5,
+            "is_kitchen": false,
+            "images": [
+                {
+                    "id": 1,
+                    "url": "https://storage.googleapis.com/image-store-local-bohdan/c0meqjc2qtansgmqect0"
+                }
+            ],
+            "likes_counter": 0,
+            "liked_by_me": false,
+            "comments": {
+                "object_id": 0,
+                "parent_id": 0,
+                "items": null,
+                "users": null,
+                "total_count": 0,
+                "limit": 0,
+                "offset": 0
+            },
+            "feed_position": 0
+        }
+    ],
+    "limit": 5,
+    "offset": 0
 }
 ```
 
@@ -308,6 +666,7 @@ Response:
 * **PUT /follow/followers/pending/:id/reject** - reject the pending request
 
 * **PUT /follow/followed/pending/:id/cancel** - cancel my pending follow request
+* **PUT /follow/followers/:user_id/remove** - remove follower
 
 ## <a name="geocoding"></a>
 ## Geocoding 
@@ -408,6 +767,29 @@ Response:
 ## Feed
 
 * **GET /feed?from=..&to=..&limit=..** - get feed
+
+## <a name="activation_codes"></a>
+## Activation Codes
+
+* **PUT /app/activate?code=..** - activate code
+
+## <a name="complaint"></a>
+## Complaint
+
+* **PUT /complaint** - post complaint
+```
+Request:
+{
+    "complaint_type": 1,
+    "object_id": 1,
+    "reason": "spam content"
+}
+```
+* ***complaint_type:***
+ **1** - review;
+ **2** - user
+  
+* ***object_id***: **user id** or **review id**
 
 ### Notifications
 
