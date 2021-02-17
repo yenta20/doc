@@ -16,15 +16,16 @@ Recon API structure proposal
 
 ## Pagination
 
-Pagination is implemented using **limit/offset** query params (except pagination for feed).
-All methods with pagination must support the default values for query parameters (if paramater is missing use 
-the default value).
+Pagination is implemented using **limit/offset** query params (except pagination for feed). All methods with pagination
+must support the default values for query parameters (if paramater is missing use the default value).
 
 The values:
- * limit == 20
- * offset == 0
-   
+
+* limit == 20
+* offset == 0
+
 # Table of contents
+
 1. [Profile](#profile)
 2. [User](#user)
 3. [Reviews](#reviews)
@@ -32,11 +33,15 @@ The values:
 5. [Followers](#followers)
 6. [Geocoding](#geocoding)
 7. [Feed](#feed)
+8. [Activation Codes](#activation-codes)
+9. [Complaint](#complaint)
 
 ## <a name="profile"></a>
+
 ## Profile
 
 * **GET /profile** - get current user profile
+
 ```
 Response:
 {
@@ -51,7 +56,9 @@ Response:
     "activation_code": ""
 }
 ```
+
 * **PUT /profile** - create/update profile
+
 ```
 Request:
 {
@@ -62,6 +69,7 @@ Request:
     "email": "john.doe@hell.com"
 }
 ```
+
 ```
 Response:
 {
@@ -75,10 +83,12 @@ Response:
     "activation_code": ""
 }
 ```
+
 * **PUT /profile/avatar** - upload avatar
 * **PUT /profile/push_token?token=..** - set push token
 * **PUT /profile/logout** - logout (clear push token)
 * **GET /profile/my_reviews/image_ids** - get all user's image ids
+
 ```
 Response:
 {
@@ -88,7 +98,9 @@ Response:
     ]
 }
 ```  
+
 * **GET /profile/settings** - get current user settings
+
 ```
 Response:
 {
@@ -96,7 +108,9 @@ Response:
     "follow_accepted_push": true
 }
 ```
+
 * **PUT /profile/settings** - update current user settings
+
 ```
 Request:
 {
@@ -104,7 +118,9 @@ Request:
     "follow_accepted_push": true
 }
 ```  
+
 * **GET /profile/follow_suggestions** - get follow suggestions for current user
+
 ```
 Response:
 [
@@ -120,6 +136,7 @@ Response:
 ```
 
 * **GET /profile/my_reviews?offset=..&limit=..&type=..** - get all reviews created by user
+
 ```
 Response:
 {
@@ -211,14 +228,17 @@ Response:
     "offset": 0
 }
 ```
+
 - ***type*** - "poi" or "kitchen"
 
-* **GET /profile/availability?nick=...*** - return 200 if nick available; return 409  if nickname not available
+* **GET /profile/availability?nick=...*** - return 200 if nick available; return 409 if nickname not available
 
 ## <a name="user"></a>
+
 ## User
 
 * **GET /user/:id** - get any user by id
+
 ```
 Response:
 {
@@ -232,11 +252,13 @@ Response:
 ```
 
 * **GET /user/:id/reviews?offset=..&limit=..** - get user reviews
+
 ```
 Response similar to /profile/my_reviews
 ```
 
 * **GET /user/search?name=..?limit=..** - search user by name
+
 ```
 Response:
 {
@@ -252,9 +274,12 @@ Response:
        ]
 }
 ```
+
 * **GET /user/:id/places** - get user reviewed places
+
 - Optional:
 - ?rect=47.6146226,-122.3446252,47.614017,-122.343562
+
 ```
 Response
 {
@@ -324,10 +349,13 @@ Response
 ```
 
 ## <a name="reviews"></a>
+
 ## Reviews
 
 * **POST /reviews** - create a review
+
 - ***POI***
+
 ```
 Request:
 {
@@ -340,7 +368,9 @@ Request:
     "image_ids": ["id-3", "id-4"]
 }
 ```
+
 - ***Kitchen***
+
 ```
 Request:
 {
@@ -353,6 +383,7 @@ Request:
 ```
 
 * **POST /reviews/:id/images/:number** - upload an image
+
 - ***id*** - review ID
 - ***number*** - image position
 
@@ -363,6 +394,7 @@ Request:
 * **DELETE /reviews/:id/like** - remove like
 
 * **GET /reviews/:id/likes** - return users who liked review
+
 ```
 Response:
 {
@@ -378,7 +410,9 @@ Response:
        ]
 }
 ```
+
 * **GET /reviews/:id** - get review by id
+
 ```
 Response:
 {
@@ -436,25 +470,31 @@ Response:
     ]
 }
 ```
+
 * **PUT /reviews/:id/preview/generate** - generate preview
+
 ```
 Response:
 {
     "url": "http://localhost:9124/preview/v1/reviews/c0mf4gc2qtansgmqectg"
 }
 ```  
+
 * **GET /reviews/by_preview/:id** - get review by preview ID
 * **DELETE /reviews/:id** - delete review
 * **POST /reviews/:id/comments** - add comment
+
 ```
 Request:
 {
     "text": "my first comment"
 }
 ```  
+
 * **PUT /reviews/:id/comments/:comment_id** update comment
 * **DELETE /reviews/:id/comments/:comment_id** - delete comment
 * **GET /reviews/:id/comments?offset=..&limit=..** - get comments
+
 ```
 Response:
 {
@@ -493,14 +533,17 @@ Response:
 - **parent_id** - not implemented yet
 
 ## <a name="places"></a>
+
 ## Places
 
-* **GET /places/search/area?rect=..** - search in the rectangle area or with point and radius. Returns only registered places.
-Optional:
+* **GET /places/search/area?rect=..** - search in the rectangle area or with point and radius. Returns only registered
+  places. Optional:
+
 - ?rect=47.6146226,-122.3446252,47.614017,-122.343562
-- ?at=47.6146226,-122.3446252&radius=20 
+- ?at=47.6146226,-122.3446252&radius=20
 
 * **GET /places/:id** - get the registered place info.
+
 ```
 Response:
 {
@@ -584,13 +627,15 @@ Response:
 }
 ```
 
-* **GET /places/search?q=..&rect=..** - text search in the rectangle area or with point and radius or with location. q is mandatory.
-Optional:
+* **GET /places/search?q=..&rect=..** - text search in the rectangle area or with point and radius or with location. q
+  is mandatory. Optional:
+
 - &rect=47.6146226,-122.3446252,47.614017,-122.343562
 - &at=47.6146226,-122.3446252&radius=20
 - &loc=Los Angeles
 
 * **GET /places/:id/reviews?offset=..&limit=..** - get all ready reviews for place.
+
 ```
 Response:
 {
@@ -642,13 +687,15 @@ Response:
 ```
 
 ## <a name="followers"></a>
-## Followers 
+
+## Followers
 
 * **GET /follow/info** - get all follow related information. Returns 4 arrays:
     * **followers** - my followers
     * **followed** - users I follow
     * **followers_requests** - pending follow requests from users wants to follow me
     * **followed_requests** - my pending follow requests
+
 ```
 Response:
 {
@@ -669,9 +716,12 @@ Response:
 * **PUT /follow/followers/:user_id/remove** - remove follower
 
 ## <a name="geocoding"></a>
-## Geocoding 
 
-* **GET /geo/rev?lat=..&long=..&radius=..** - search places for point and radius. Returns the merged result of places from google ,here and repo
+## Geocoding
+
+* **GET /geo/rev?lat=..&long=..&radius=..** - search places for point and radius. Returns the merged result of places
+  from google ,here and repo
+
 ```
 Response:
 {
@@ -718,7 +768,9 @@ Response:
 }
 ```
 
-* **POST /geo/rev/batch** - search places for the points sets. Creates points clusters with defined radius and searches places for the each cluster.
+* **POST /geo/rev/batch** - search places for the points sets. Creates points clusters with defined radius and searches
+  places for the each cluster.
+
 ```
 Request:
 {
@@ -764,19 +816,23 @@ Response:
 ```
 
 ## <a name="feed"></a>
+
 ## Feed
 
 * **GET /feed?from=..&to=..&limit=..** - get feed
 
-## <a name="activation_codes"></a>
+## <a name="activation-codes"></a>
+
 ## Activation Codes
 
 * **PUT /app/activate?code=..** - activate code
 
 ## <a name="complaint"></a>
+
 ## Complaint
 
 * **PUT /complaint** - post complaint
+
 ```
 Request:
 {
@@ -785,10 +841,11 @@ Request:
     "reason": "spam content"
 }
 ```
+
 * ***complaint_type:***
- **1** - review;
- **2** - user
-  
+  **1** - review;
+  **2** - user
+
 * ***object_id***: **user id** or **review id**
 
 ### Notifications
