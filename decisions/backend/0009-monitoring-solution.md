@@ -71,7 +71,8 @@ https://cloud.google.com/monitoring/api/ref_v3/rest/v1/projects.dashboards
 
 ## Alert channels
 
-We are going to use `Webhooks` GCP notification channel to send critical alert to specific Telegram group channel
+Telegram private channel used to receive GCP monitoring `Webhooks` alerts via Telegram bot:
+`GCP monitoring` -> `Telegram bot` -> `Telegram channel`
 
 ## Alert triggers and notifications
 
