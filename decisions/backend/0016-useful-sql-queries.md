@@ -23,7 +23,7 @@ WITH aUsers AS (
     FROM review
     WHERE ready
 )
-SELECT u.id, u.nick, count(*) AS followers
+SELECT u.id, u.nick, u.name, count(*) AS followers
 FROM user_follower f
          JOIN user_profile u on f.user_id = u.id
 WHERE f.user_id IN (SELECT u_id FROM aUsers)
