@@ -45,6 +45,7 @@ WITH aUsers AS (
 )
 SELECT u.id,
        u.nick,
+       u.name,
        sum(case r.is_kitchen when false then 1 else 0 end) AS poi_count,
        sum(case r.is_kitchen when true then 1 else 0 end)  AS kitchen_count
 FROM review r
