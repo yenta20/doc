@@ -32,6 +32,22 @@ ORDER BY count(*) DESC
 LIMIT 100;
 ```
 
+- Top 100 followings per active user:
+```postgresql
+WITH aUsers AS (
+    SELECT DISTINCT user_id AS u_id
+    FROM review
+    WHERE ready
+)
+SELECT u.id, u.nick, u.name, count(*) AS followings
+FROM user_follower f
+         JOIN user_profile u on f.follower_id = u.id
+WHERE f.follower_id IN (SELECT u_id FROM aUsers) AND f.status = 'accepted'
+GROUP BY u.id, u.nick
+ORDER BY count(*) DESC
+LIMIT 100;
+```
+
 - Top 100 reviews (POI + Kitchen) per active user:
 ```postgresql
 WITH aUsers AS (
